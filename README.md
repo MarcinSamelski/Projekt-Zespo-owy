@@ -1,4 +1,4 @@
-# Projekt-Zespołowy M.Samelski, A.Grzybowska
+# Projekt-Zespołowy M.Samelski, A.Grzybowska, Patryk Czerwonogrodzki
 Aplikacja bankowa, w której kb będzie miał możliwość utworzenia własnego konta głównego, oraz subkont np. oszczędnościowych
 
 ### Cel aplikacji? 
