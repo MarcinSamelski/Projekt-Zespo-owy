@@ -1,0 +1,94 @@
+/* Overall page styling */
+:root {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #3b7d79; /* Change text color */
+  background-color: #d2e7e1; /* Change background color */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container for centralizing content */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Heading level 1 styling */
+h1 {
+  color: #333;
+}
+
+/* Heading level 2 styling */
+h2 {
+  color: #666;
+}
+
+/* Paragraph styling */
+p {
+  color: #444;
+}
+
+/* Button styling */
+button {
+  background-color: #39716a;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: #39716a;
+}
+
+/* Form container styling */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Text input field styling */
+input[type="text"],
+input[type="password"] {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Submit button styling */
+input[type="submit"] {
+  background-color: #39716a;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Submit button hover effect */
+input[type="submit"]:hover {
+  background-color: #218838;
+}
+
+/* Account details container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/* Account details center */
+.content {
+  text-align: center;
+}
