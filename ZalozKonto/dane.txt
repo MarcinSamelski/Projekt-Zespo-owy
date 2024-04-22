@@ -1,1 +1,0 @@
-{"imie": "Marcin", "nazwisko": "Marcin", "pesel": "0000", "login": "MArcin", "haslo": "MArcin", "nr_rachunku": "85824334110366607710535723", "stan_konta": 0, "nazwa_konta": "konto"}
