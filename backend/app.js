@@ -8,7 +8,7 @@ const port = 3000;
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "./clients.sqlite",
+  storage: "./bank.sqlite",
 });
 
 class Client extends Model {}
@@ -23,6 +23,17 @@ Client.init(
     balance: DataTypes.DECIMAL,
   },
   { sequelize, modelName: "client" }
+);
+
+class TransactionHistory extends Model {}
+TransactionHistory.init(
+  {
+    from: DataTypes.STRING,
+    to: DataTypes.STRING,
+    type: DataTypes.STRING,
+    amount: DataTypes.DECIMAL,
+  },
+  { sequelize, modelName: "Transaction" }
 );
 
 sequelize.sync().then(
