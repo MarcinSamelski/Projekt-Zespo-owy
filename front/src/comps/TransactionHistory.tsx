@@ -4,7 +4,6 @@ interface Transaction {
     description: string;
     amount: number;
 }
-
 interface TransactionHistoryProps {
     transactions: Transaction[];
 }

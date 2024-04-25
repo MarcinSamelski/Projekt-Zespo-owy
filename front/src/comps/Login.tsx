@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../comps/images/Your_Banking_App_Logo.png'; //dodanie logo --> do zrobienia
+import logo from '/images/Your_Banking_App_Logo.png'; //dodanie logo --> do zrobienia
 
 interface LoginProps {
     onLogin: (username: string, password: string) => void;
