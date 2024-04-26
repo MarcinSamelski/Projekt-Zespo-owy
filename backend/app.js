@@ -6,14 +6,20 @@ const router = require("./routes/routes");
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-initDatabase();
+initDatabase(); // Inicjalizacja bazy danych
 
-// JSON i formularze
+app.use(express.static('public')); // Obsługa plików statycznych
+
 app.use(express.json());
 
-app.use("/", router);
+app.use("/", router); // Obsługa tras API
 
-// Start
+// Obsługa ścieżki głównej
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 app.listen(PORT, () => {
   console.log(`Serwer uruchomiony na porcie ${PORT}`);
 });
+
