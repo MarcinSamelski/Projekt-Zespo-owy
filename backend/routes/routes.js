@@ -17,7 +17,7 @@ router.post("/deposit", async (req, res) => {
     where: { accountNumber: req.body["accountNumber"] },
   });
   const amount = req.body["amount"];
-  console.log(client);
+  
   if (client == null) {
     return res
       .status(404)
