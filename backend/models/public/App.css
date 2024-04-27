@@ -1,0 +1,76 @@
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Login page styles */
+.login-container {
+  max-width: 800px;
+  margin: 10px auto;
+  padding: 60px;
+  border: 20px solid #4ea879;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+}
+
+.login-container form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.login-container form input[type="text"],
+.login-container form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.login-container form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #4ea879; 
+  color: #fff;
+  cursor: pointer;
+}
+
+.login-container form button:hover {
+  background-color: #18312f;
+}
+
+.account-content {
+  content :"";
+  display: table;
+  clear: both;
+  max-width: 2000px;
+  margin: 80px auto;
+  padding: 30px;
+  border: 20px solid #4ea879;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #000000; /* Black text */
+  margin-top: 20px; /* Adjust margin as needed */
+  text-align: center; /* Center the content */
+}
+
+.account-balance {
+  background-color: #9ddfc1; /* White background */
+  color: #645151; /* Black text */
+  padding: 20px;
+  border: 20px solid #f9f9f9;
+  border-radius: 5px;
+  margin-top: 20px; /* Adjust margin as needed */
+  text-align: center; /* Center the content */
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
