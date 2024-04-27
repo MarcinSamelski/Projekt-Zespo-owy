@@ -17,9 +17,9 @@ Wejść w pliki backend i front zmaieszczone w głównym katalogu repozytorium
 cd Projekt-Zespo-owy
 cd backend
 cd front
-We froncie włączyć stronę za pomoca kodu
+We froncie włączyć stronę za pomoca kodu:
 vite
-możliwe że będzie trzeba lokalnie zainstalować reacta npm instll react
+Możliwe że będzie trzeba lokalnie zainstalować reacta npm install react.
 Strona powinna być dostępna pod adresem localhost:5173
 W backendzie włączyć bazę danych node app.js
-możliwe że będzie trzeba lokalnie zainstalować expressa npm instll express
+możliwe że będzie trzeba lokalnie zainstalować expressa npm install express
