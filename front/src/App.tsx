@@ -13,35 +13,98 @@ import Paycheck from './comps/Paycheck';
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<string | null>(null);
+  const [balance, setBalance] = useState<number | null>(null);
+  const [accountNumber, setAccountNumber] = useState<string | null>(null);
 
-  const handleLogin = (username: string, password: string) => {
-      //autoryzacja --> database --> do zrobienia
-      //dla testowania --> username "admin" password "password"
-      if (username === "admin" && password === "password") {
+  useEffect(() => {
+    const fetchAccountInfo = async () => {
+        try {
+            const response = await fetch('http://localhost:3000', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setBalance(data.balance);
+                setAccountNumber(data.accountNumber);
+            } else {
+                console.error('Failed to fetch account info');
+            }
+        } catch (error) {
+            console.error('Error fetching account info:', error);
+        }
+    };
+
+    if (isLoggedIn) {
+        fetchAccountInfo();
+    }
+}, [isLoggedIn]);
+
+
+   const handleLogin = async (username: string, password: string) => {
+    try {
+      const response = await fetch('http://localhost:3000', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              username,
+              password,
+          })
+      });
+
+      if (response.ok) {
           setIsLoggedIn(true);
           setUser(username);
       } else {
-          alert("Invalid username or password. Try again!");
+          alert('Invalid username or password. Try again!');
       }
-  };
+  } catch (error) {
+      console.error('Error logging in:', error);
+      alert('An error occurred while logging in. Please try again later.');
+  }
+};
 
-  const handleRegister = (username: string, password: string) => {
-    // do testowania, dodanie logiki--> przesłanie do database --> do zrobienia
-    setIsLoggedIn(true); // automatyczne logowanie po rejestracji
-    setUser(username);
-  };
+ const handleRegister = async (username: string, password: string, firstName: string, lastName: string, pesel: string ) => {
+    try {
+      const response = await fetch('http://localhost:3000', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            pesel,
+            username,
+            password,
+          }),
+      });
+
+      if (response.ok) {
+          setIsLoggedIn(true);
+          setUser(username);
+      } else {
+          alert('Registration failed. Please try again!');
+      }
+  } catch (error) {
+      console.error('Error registering:', error);
+      alert('An error occurred while registering. Please try again later.');
+  }
+};
 
   const handleLogout = () => {
       setIsLoggedIn(false);
       setUser(null);
   };
   const handlePayment = () => {
-   // ewentualne wykrycie błedów --> payment unsuccesful
     alert("Payment successful!");
 };
 
 const handlePaycheck = () => {
-  // ewentualne wykrycie błedów --> payment unsuccesful
    alert("Paycheck successful!");
 };
   return (
@@ -56,8 +119,8 @@ const handlePaycheck = () => {
                     <h2>Welcome, {user}!</h2>
                     <button onClick={handleLogout}>Logout</button>
                     <div className="account-balance">
-                      <AccountBalance balance={1000} />
-                      <AccountNumber account={85824334110366607710535723n} />
+                      <AccountNumber account={BigInt(accountNumber || '0')} />
+                      <AccountBalance balance={balance ?? 0} />
                       <Payment onPayment={handlePayment} /> 
                       <Paycheck onPaycheck={handlePaycheck} /> 
                       </div>
