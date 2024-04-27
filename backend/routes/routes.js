@@ -56,17 +56,15 @@ router.post("/withdraw", async (req, res) => {
   const balance = client.balance;
 
   if (amount <= 0) {
-    return res
-      .status(400)
-      .send({ message: "Wypłacana kwota nie moze byc mniejsza bądź równa zero" });
+    return res.status(400).send({
+      message: "Wypłacana kwota nie moze byc mniejsza bądź równa zero",
+    });
   }
 
   if (amount > balance) {
-    return res
-      .status(400)
-      .send({
-        message: "Nie można wypłacić więcej niż znajduje się na koncie",
-      });
+    return res.status(400).send({
+      message: "Nie można wypłacić więcej niż znajduje się na koncie",
+    });
   }
 
   await client.update({ balance: balance - amount });
@@ -79,7 +77,15 @@ router.post("/withdraw", async (req, res) => {
 });
 router.post("/transfer", (req, res) => {});
 router.post("/login", (req, res) => {});
-router.get("/getAccountInfo", (req, res) => {});
+router.get("/getAccountInfo", async (req, res) => {
+  const client = await Client.findOne({ where: req.body });
+
+  if (client == null) {
+    return res.status(404).send({ message: "Nie znaleziono klienta" });
+  }
+
+  res.status(200).send(client);
+});
 
 router.get("/getTransactionHistory", async (req, res) => {
   const history = await TransactionHistory.findAll({
