@@ -12,6 +12,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", (req, res) => {});
+
 router.post("/deposit", async (req, res) => {
   const client = await Client.findOne({
     where: { accountNumber: req.body["accountNumber"] },
@@ -35,6 +36,12 @@ router.post("/deposit", async (req, res) => {
   await client.update({ balance: balance + amount });
 
   await client.save();
+
+  await TransactionHistory.create({
+    to: client.accountNumber,
+    type: "deposit",
+    amount: amount,
+  });
 
   res.status(200).send({
     message: `Wplacono ${amount} na konto ${req.body["accountNumber"]}`,
@@ -71,10 +78,17 @@ router.post("/withdraw", async (req, res) => {
 
   await client.save();
 
+  await TransactionHistory.create({
+    to: client.accountNumber,
+    type: "withdraw",
+    amount: amount,
+  });
+
   res.status(200).send({
     message: `Wypłacono ${amount} z konta ${req.body["accountNumber"]}`,
   });
 });
+
 router.post("/transfer", async (req, res) => {
   const sender = await Client.findOne({
     where: { accountNumber: req.body["senderAccountNumber"] },
@@ -120,7 +134,6 @@ router.post("/transfer", async (req, res) => {
   });
 });
 
-router.post("/login", (req, res) => {});
 router.get("/getAccountInfo", async (req, res) => {
   const client = await Client.findOne({ where: req.body });
 
