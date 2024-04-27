@@ -11,11 +11,15 @@ Nasza aplikacja będzie oferować klientom intuicyjny interfejs, który umożliw
 Po zalogowaniu klient będzie mógł utworzyć swoje główne konto bankowe oraz dodawać i zarządzać subkontami według własnych potrzeb. Będzie możliwość ustalenia celów oszczędnościowych dla poszczególnych subkont oraz automatycznych przelewów między nimi. 
 
 ### Uruchamianie
-Pobrać i wypakować pliki na dysk lub pobrać repozytorium z gita
+Pobrać i wypakować pliki na dysk lub pobrać repozytorium z gita,
 git clone https://github.com/MarcinSamelski/Projekt-Zespo-owy
-Wejść w plik Scalanie zmaieszczony w głównym katalogu repozytorium
+Wejść w pliki backend i front zmaieszczone w głównym katalogu repozytorium
 cd Projekt-Zespo-owy
-cd Scalanie
-Włączyć stronę za pomoca kodu
+cd backend
+cd front
+We froncie włączyć stronę za pomoca kodu
 vite
+możliwe że będzie trzeba lokalnie zainstalować reacta npm instll react
 Strona powinna być dostępna pod adresem localhost:5173
+W backendzie włączyć bazę danych node app.js
+możliwe że będzie trzeba lokalnie zainstalować expressa npm instll express
