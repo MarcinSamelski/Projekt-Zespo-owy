@@ -17,7 +17,7 @@ router.post("/deposit", async (req, res) => {
     where: { accountNumber: req.body["accountNumber"] },
   });
   const amount = req.body["amount"];
-  
+
   if (client == null) {
     return res
       .status(404)
@@ -26,10 +26,10 @@ router.post("/deposit", async (req, res) => {
 
   const balance = client.balance;
 
-  if (amount < 0) {
+  if (amount <= 0) {
     return res
       .status(400)
-      .send({ message: "Wplacana kwota nie moze byc mniejsza od zera" });
+      .send({ message: "Wplacana kwota nie moze byc mniejsza lub równa zero" });
   }
 
   await client.update({ balance: balance + amount });
@@ -41,7 +41,42 @@ router.post("/deposit", async (req, res) => {
   });
 });
 
-router.post("/withdraw", (req, res) => {});
+router.post("/withdraw", async (req, res) => {
+  const client = await Client.findOne({
+    where: { accountNumber: req.body["accountNumber"] },
+  });
+  const amount = req.body["amount"];
+
+  if (client == null) {
+    return res
+      .status(404)
+      .send({ message: "Nie znaleziono klienta o danym numerze konta" });
+  }
+
+  const balance = client.balance;
+
+  if (amount <= 0) {
+    return res
+      .status(400)
+      .send({ message: "Wypłacana kwota nie moze byc mniejsza bądź równa zero" });
+  }
+
+  if (amount > balance) {
+    return res
+      .status(400)
+      .send({
+        message: "Nie można wypłacić więcej niż znajduje się na koncie",
+      });
+  }
+
+  await client.update({ balance: balance - amount });
+
+  await client.save();
+
+  res.status(200).send({
+    message: `Wypłacono ${amount} z konta ${req.body["accountNumber"]}`,
+  });
+});
 router.post("/transfer", (req, res) => {});
 router.post("/login", (req, res) => {});
 router.get("/getAccountInfo", (req, res) => {});
