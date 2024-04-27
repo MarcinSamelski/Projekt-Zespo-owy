@@ -75,7 +75,51 @@ router.post("/withdraw", async (req, res) => {
     message: `Wypłacono ${amount} z konta ${req.body["accountNumber"]}`,
   });
 });
-router.post("/transfer", (req, res) => {});
+router.post("/transfer", async (req, res) => {
+  const sender = await Client.findOne({
+    where: { accountNumber: req.body["senderAccountNumber"] },
+  });
+  const recipient = await Client.findOne({
+    where: { accountNumber: req.body["recipientAccountNumber"] },
+  });
+  const amount = req.body["amount"];
+
+  if (sender == null || recipient == null) {
+    return res.status(404).send({
+      message: `Nie znaleziono ${
+        sender == null ? "wysyłającego" : "odbierającego"
+      }`,
+    });
+  }
+
+  if (amount <= 0) {
+    return res
+      .status(400)
+      .send({ message: "Kwota nie moze byc mniejsza bądź równa zero" });
+  }
+  if (amount > sender.balance) {
+    return res.status(400).send({
+      message: "Nie można przelać więcej niż znajduje się na koncie",
+    });
+  }
+
+  await sender.update({ balance: sender.balance - amount }).then(sender.save());
+  await recipient
+    .update({ balance: recipient.balance + amount })
+    .then(recipient.save());
+
+  await TransactionHistory.create({
+    from: sender.accountNumber,
+    to: recipient.accountNumber,
+    type: "transfer",
+    amount: amount,
+  });
+
+  res.status(200).send({
+    message: `Wysłano ${amount} z ${sender.accountNumber} do ${recipient.accountNumber}`,
+  });
+});
+
 router.post("/login", (req, res) => {});
 router.get("/getAccountInfo", async (req, res) => {
   const client = await Client.findOne({ where: req.body });
