@@ -12,7 +12,35 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", (req, res) => {});
-router.post("/deposit", (req, res) => {});
+router.post("/deposit", async (req, res) => {
+  const client = await Client.findOne({
+    where: { accountNumber: req.body["accountNumber"] },
+  });
+  const amount = req.body["amount"];
+  console.log(client);
+  if (client == null) {
+    return res
+      .status(404)
+      .send({ message: "Nie znaleziono klienta o danym numerze konta" });
+  }
+
+  const balance = client.balance;
+
+  if (amount < 0) {
+    return res
+      .status(400)
+      .send({ message: "Wplacana kwota nie moze byc mniejsza od zera" });
+  }
+
+  await client.update({ balance: balance + amount });
+
+  await client.save();
+
+  res.status(200).send({
+    message: `Wplacono ${amount} na konto ${req.body["accountNumber"]}`,
+  });
+});
+
 router.post("/withdraw", (req, res) => {});
 router.post("/transfer", (req, res) => {});
 router.post("/login", (req, res) => {});
