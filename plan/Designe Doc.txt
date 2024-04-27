@@ -1,0 +1,8 @@
+Aplikacja bankowa z interfejsem webowym umożliwia klientom założenie konta bankowego, zalogowanie się do swojego konta, przeglądanie salda na koncie, dokonywanie wpłat, wypłat 
+i przelewów między kontami.
+
+Umożliwienie klientom zakładania nowych kont bankowych poprzez formularz internetowy.
+Zapewnienie klientom możliwości logowania się do swojego konta za pomocą nazwy użytkownika i hasła.
+Wyświetlanie bieżącego salda na koncie po zalogowaniu.
+Implementacja funkcjonalności do dokonywania wpłat, wypłat i przelewów między kontami.
+Zapewnienie responsywnego i atrakcyjnego interfejsu użytkownika, który jest łatwy w obsłudze.

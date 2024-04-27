@@ -1,0 +1,8 @@
+1. Analiza wymagań
+2. Projektowanie architektury
+3. Implementacja backendu
+4. Implementacja frontendu
+5. Integracja frontendu i backendu
+6. Testowanie
+7. Dokumentacja
+8. Wdrożenie
