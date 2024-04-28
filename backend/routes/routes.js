@@ -3,15 +3,62 @@ const router = express.Router();
 const { Client, TransactionHistory } = require("../models/index");
 
 router.post("/register", async (req, res) => {
-  req.body["accountNumber"] = generateAccountNumber();
-  req.body["balance"] = 0;
+  const { username, password, firstName, lastName, pesel } = req.body;
 
-  await Client.create(req.body);
+  try {
+    // Generowanie numeru konta
+    const accountNumber = generateAccountNumber();
 
-  res.status(201).send({ message: "Konto poprawnie utworzone" });
+    // Tworzenie w bazie
+    const newClient = await Client.create({
+      username,
+      password,
+      firstName,
+      lastName,
+      pesel,
+      accountNumber,
+      balance: 1000, 
+    });
+
+    res.status(201).send({ message: 'Rejestracja udana', client: newClient });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Wystąpił błąd podczas rejestracji' });
+  }
 });
 
-router.post("/login", (req, res) => {});
+// Generowanie numeru konta
+function generateAccountNumber() {
+  const length = 26;
+  let accountNumber = '';
+  const characters = '0123456789';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    accountNumber += characters[randomIndex];
+  }
+
+  return accountNumber;
+}
+
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Szukanie klienta
+    const client = await Client.findOne({ where: { username } });
+
+    // Sprawdzanie czy klient istnieje
+    if (!client || client.password !== password) {
+      return res.status(401).send({ message: 'Nieprawidłowy login lub hasło' });
+    }
+
+    res.status(200).send({ message: 'Logowanie udane', client });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Wystąpił błąd podczas logowania' });
+  }
+});
 
 router.post("/deposit", async (req, res) => {
   const client = await Client.findOne({
